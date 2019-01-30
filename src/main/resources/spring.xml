@@ -1,0 +1,31 @@
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+    <context:component-scan base-package="com.demo.restlet"/>
+
+    <bean id="component" class="org.restlet.ext.spring.SpringComponent">
+        <property name="defaultTarget" ref="restServer"/>
+    </bean>
+
+    <bean id="restServer" class="com.demo.restlet.MyJaxRsApplication">
+        <constructor-arg ref="component"></constructor-arg>
+        <constructor-arg ref="v5SpringJaxApplication"></constructor-arg>
+        <property name="objectFactory" ref="v5SpringJaxObjectFactory"/>
+    </bean>
+
+    <bean id="v5SpringJaxObjectFactory" class="com.demo.restlet.V5SpringJaxObjectFactory">
+        <constructor-arg ref="v5JaxBeanCollection"/>
+    </bean>
+
+    <bean id="v5SpringJaxApplication" class="com.demo.restlet.V5SpringJaxApplication">
+        <constructor-arg ref="v5JaxBeanCollection"/>
+    </bean>
+
+    <bean id="v5JaxBeanCollection" class="com.demo.restlet.V5JaxBeanCollection"/>
+
+
+</beans>
